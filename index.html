@@ -28,7 +28,6 @@
 
 		<script>
 
-			var mixer;
 			var container, stats, controls;
 			var camera, scene, renderer, light;
 			var shadowHelper, groundHelper;
@@ -128,6 +127,45 @@
 
 		</script>
 
+		<script>
+
+			var mixer, fbx;
+			var loader = new THREE.FBXLoader();
+			loader.load( "models/Samba_Dancing_1.fbx", function( object ){
+			
+				object.name = "Charlotte";
+				console.log( object ); // THREE.group.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				fbx = object;
+
+			});
+
+		</script>
 
 	</body>
 </html>
