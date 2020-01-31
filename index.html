@@ -31,6 +31,7 @@
 			var mixer;
 			var container, stats, controls;
 			var camera, scene, renderer, light;
+			var shadowHelper, groundHelper;
 			var clock = new THREE.Clock();
 			var projector = new THREE.Projector();
 			var mouse = new THREE.Vector2();
@@ -63,9 +64,7 @@
 			//	scene.add( shadowHelper );
 
 			//	Ground helper.
-				var grid = new THREE.GridHelper( 5000, 100, 0x000000, 0x000000 );
-				grid.material.opacity = 0.2;
-				grid.material.transparent = true;
+				groundHelper = new THREE.GridHelper( 5000, 100, 0x444444, 0x444444 );
 				scene.add( grid );
 
 			//	Renderer.
@@ -116,7 +115,10 @@
 
 				var delta = clock.getDelta();
 
+			//	Updates.
 				mixer && mixer.update( delta );
+				shadowHelper && shadowHelper.update();
+				light && light.position.copy( camera.position );
 
 				renderer.render( scene, camera );
 
