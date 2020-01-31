@@ -129,7 +129,7 @@
 
 		<script>
 
-			var animations, fbx;
+			var charlotte, animations, fbx;
 			var loader = new THREE.FBXLoader();
 			loader.load( "models/Samba_Dancing_1.fbx", function( object ){
 			
@@ -138,6 +138,11 @@
 				object.scale.set(100,100,100);
 				console.log( object ); 
 
+				charlotte = object.children[0];
+				charlotte.material.forEach( function( material ){
+					material.shininess = 100;
+				});
+				
 				animations = object.animations;
 				mixer = new THREE.AnimationMixer( object );
 
