@@ -40,7 +40,7 @@
 
 			//	Camera.
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200000 );
-				camera.position.set( 100, 200, 300 );
+				camera.position.set( -130, 460, 780 );
 
 			//	Scene.
 				scene = new THREE.Scene();
@@ -86,7 +86,7 @@
 
 			//	Controls.
 				controls = new THREE.EditorControls( camera, renderer.domElement );
-				controls.center.set( 0, 100, 0 );
+				controls.center.set( -10, 350, 20 );
 
 			//	Event listeners.
 				window.addEventListener("resize", onWindowResize);
@@ -148,6 +148,7 @@
 
 				fbx = object;
 				scene.add( object );
+				controls.focus( object.children[0], true );
 
 			});
 
