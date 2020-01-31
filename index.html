@@ -40,7 +40,7 @@
 
 			//	Camera.
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200000 );
-				camera.position.set( -130, 460, 780 );
+				camera.position.set( 0, 460, 780 );
 
 			//	Scene.
 				scene = new THREE.Scene();
@@ -86,7 +86,7 @@
 
 			//	Controls.
 				controls = new THREE.EditorControls( camera, renderer.domElement );
-				controls.center.set( -10, 350, 20 );
+				controls.center.set( 0, 350, 0 );
 
 			//	Event listeners.
 				window.addEventListener("resize", onWindowResize);
