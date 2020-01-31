@@ -36,10 +36,7 @@
 			var mouse = new THREE.Vector2();
 			var rendererHalfWidth, rendererHalfHeight;
 
-			init();
-			animate();
-
-			function init(){
+			(function(){
 
 			//	Camera.
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200000 );
@@ -95,7 +92,9 @@
 				window.addEventListener("resize", onWindowResize);
 				window.addEventListener("mousemove", onMouseMove);
 
-			}
+				animate();
+
+			})();
 
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
@@ -130,39 +129,25 @@
 
 		<script>
 
-			var fbx;
+			var animations, fbx;
 			var loader = new THREE.FBXLoader();
 			loader.load( "models/Samba_Dancing_1.fbx", function( object ){
 			
+			//	THREE.Group.
 				object.name = "Charlotte";
-				console.log( object ); // THREE.group.
+				object.scale.set(100,100,100);
+				console.log( object ); 
 
+				animations = object.animations;
+				mixer = new THREE.AnimationMixer( object );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				if ( animations.length ) {
+					var action = mixer.clipAction( animations[0], object );
+					action.play();
+				}
 
 				fbx = object;
+				scene.add( object );
 
 			});
 
