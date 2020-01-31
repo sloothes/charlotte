@@ -48,7 +48,7 @@
 			//	Scene.
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0x000000 );
-				scene.fog = new THREE.Fog( 0x000000, 20000, 100000 );
+				scene.fog = new THREE.Fog( 0xa0a0a0, 20000, 100000 );
 
 			//	Lights.
 				light = new THREE.DirectionalLight( 0xffffff );
@@ -78,7 +78,7 @@
 				});
 
 				renderer.shadowMap.enabled = true;
-				renderer.setClearColor( scene.fog.color );
+				renderer.setClearColor( 0x000000 );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
