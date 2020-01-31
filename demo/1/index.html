@@ -144,9 +144,9 @@
 				});
 				
 				animations = object.animations;
-				mixer = new THREE.AnimationMixer( object );
 
 				if ( animations.length ) {
+					mixer = new THREE.AnimationMixer( object );
 					var action = mixer.clipAction( animations[0], object );
 					action.play();
 				}
