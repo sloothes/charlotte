@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+		<title>charlotte (demo)</title>
+
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/bootbox-dialoges.css">
+
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+
+	</head>
+
+	<body>
+
+		<script src="/threejs/108/build/three.js"></script>
+		<script src="/threejs/108/examples/js/controls/EditorControls.js"></script>
+		<script src="/threejs/108/examples/js/libs/inflate.min.js"></script> <!-- FBX -->
+		<script src="/threejs/108/examples/js/loaders/FBXLoader.js"></script>
+		<script src="/threejs/108/examples/js/loaders/OBJLoader.js"></script>
+		<script src="/threejs/108/examples/js/loaders/MTLLoader.js"></script>
+		<script src="/threejs/108/examples/js/loaders/ColladaLoader.js"></script>
+
+		<script>
+
+			var mixer;
+			var container, stats, controls;
+			var camera, scene, renderer, light;
+			var clock = new THREE.Clock();
+			var projector = new THREE.Projector();
+			var mouse = new THREE.Vector2();
+			var rendererHalfWidth, rendererHalfHeight;
+
+			function init(){
+
+			//	Camera.
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200000 );
+				camera.position.set( 100, 200, 300 );
+
+			//	Scene.
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0x000000 );
+				scene.fog = new THREE.Fog( 0x000000, 20000, 100000 );
+
+			//	Lights.
+				light = new THREE.DirectionalLight( 0xffffff );
+				light.position.set( 0, 200, 100 );
+				light.castShadow = true;
+				light.shadow.camera.top = 180;
+				light.shadow.camera.bottom = - 100;
+				light.shadow.camera.left = - 120;
+				light.shadow.camera.right = 120;
+				scene.add( light );
+
+			//	Shadow helper.
+				shadowHelper = new THREE.CameraHelper(light.shadow.camera);
+				shadowHelper.visible = false;
+			//	scene.add( shadowHelper );
+
+			//	Ground helper.
+				var grid = new THREE.GridHelper( 5000, 100, 0x000000, 0x000000 );
+				grid.material.opacity = 0.2;
+				grid.material.transparent = true;
+				scene.add( grid );
+
+			//	Renderer.
+				renderer = new THREE.WebGLRenderer({
+					antialias: true,
+					gammaInput: true,
+					gammaOutput: true,
+					preserveDrawingBuffer: true,
+				});
+
+				renderer.shadowMap.enabled = true;
+				renderer.setClearColor( scene.fog.color );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+			//	Mouse.
+				rendererHalfWidth  = renderer.domElement.width * 0.5;
+				rendererHalfHeight = renderer.domElement.height * 0.5;
+
+			//	Controls.
+				controls = new THREE.EditorControls( camera, renderer.domElement );
+				controls.center.set( 0, 100, 0 );
+
+			//	Event listeners.
+				window.addEventListener("resize", onWindowResize);
+				window.addEventListener("mousemove", onMouseMove);
+
+			}
+
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				rendererHalfWidth = renderer.domElement.width * 0.5;
+				rendererHalfHeight = renderer.domElement.height * 0.5;
+			}
+
+			function onMouseMove(e) {
+				mouse.x = ( e.clientX - rendererHalfWidth );
+				mouse.y = ( e.clientY - rendererHalfHeight );
+			}
+
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				var delta = clock.getDelta();
+
+				mixer && mixer.update( delta );
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+
+	</body>
+</html>
