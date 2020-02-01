@@ -133,19 +133,26 @@
 			var loader = new THREE.FBXLoader();
 			loader.load( "/charlotte/models/fbx/chh_CatwalkWalkCollection_mxr_v2.5.1.fbx", function( object ){
 			
-			//	THREE.Group.
+			//	object is a THREE.Group.
+
 				object.name = "Charlotte";
-			//	object.scale.set(100,100,100);
 				console.log( object ); 
 				
 				animations = object.animations;
 
 				if ( animations.length ) {
-					mixer = new THREE.AnimationMixer( object );
-					var action = mixer.clipAction( animations[0], object );
-					action.play();
-				}
 
+					mixer = new THREE.AnimationMixer( object );
+
+					if ( animations.length > 1 ) {
+						var action = mixer.clipAction( animations[1], object );
+						action.play();
+					} else {
+						mixer.clipAction( animations[0], object ).play();
+					}
+
+				}
+				
 				fbx = object;
 				scene.add( object );
 
